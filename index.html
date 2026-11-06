@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Video Studio - AI Video Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">AI</div>
+            <div>
+                <h2>AI Video Studio</h2>
+                <span>AI Creative Platform</span>
+            </div>
+        </div>
+
+        <button class="new-project" onclick="newProject()">
+            + New Project
+        </button>
+
+        <p class="menu-label">WORKSPACE</p>
+
+        <nav>
+            <a href="#" class="active" data-page="create">✦ Create Video</a>
+            <a href="#" data-page="library">▣ My Library</a>
+            <a href="#" data-page="history">◷ Recent Creations</a>
+        </nav>
+
+        <p class="menu-label">ACCOUNT</p>
+
+        <nav>
+            <a href="#" data-page="upgrade">♛ Upgrade Plan</a>
+            <a href="#" data-page="settings">⚙ Settings</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="free-plan">
+
+                <span>YOUR CURRENT PLAN</span>
+
+                <h3>Free Plan</h3>
+
+                <p id="sidebarCredits">5 / 5 videos available</p>
+
+                <div class="progress">
+                    <div id="creditProgress"></div>
+                </div>
+
+                <button onclick="showPage('upgrade')">
+                    Upgrade Now →
+                </button>
+
+            </div>
+
+            <div class="profile">
+                <div class="avatar">AI</div>
+                <div>
+                    <strong>My Account</strong>
+                    <small>Free Member</small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+            <div class="top-title">
+                <span>AI VIDEO STUDIO</span>
+            </div>
+
+            <div class="top-actions">
+
+                <button class="upgrade-top"
+                    onclick="showPage('upgrade')">
+                    ♛ Upgrade
+                </button>
+
+                <button class="theme-button" onclick="toggleTheme()">
+                    ☀
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- CREATE VIDEO PAGE -->
+
+        <section class="page" id="createPage">
+
+            <div class="hero">
+
+                <div class="hero-badge">
+                    ✦ AI POWERED VIDEO GENERATOR
+                </div>
+
+                <h1>
+                    Create Videos From<br>
+                    <span>Your Imagination.</span>
+                </h1>
+
+                <p>
+                    Turn your ideas into stunning AI videos.
+                    Create something amazing with SA Video Studio.
+                </p>
+
+            </div>
+
+
+            <div class="workspace">
+
+                <!-- GENERATOR FORM -->
+
+                <div class="generator-card">
+
+                    <div class="card-heading">
+
+                        <div>
+                            <h2>✦ Create Your Video</h2>
+                            <p>Customize your video settings.</p>
+                        </div>
+
+                        <span class="free-badge">FREE PLAN</span>
+
+                    </div>
+
+
+                    <!-- GENERATION TYPE -->
+
+                    <label>Generation Mode</label>
+
+                    <div class="mode-buttons">
+
+                        <button class="mode-btn active"
+                            onclick="setMode('text',this)">
+                            ✍ Text to Video
+                        </button>
+
+                        <button class="mode-btn"
+                            onclick="setMode('image',this)">
+                            🖼 Image to Video
+                        </button>
+
+                    </div>
+
+
+                    <!-- PROMPT -->
+
+                    <label>Your Video Prompt</label>
+
+                    <textarea id="prompt"
+                        placeholder="Describe your imagination... Example: A beautiful futuristic city with flying cars, cinematic lighting, realistic details..."></textarea>
+
+                    <button class="improve-btn" onclick="improvePrompt()">
+                        ✨ Improve Prompt
+                    </button>
+
+
+                    <!-- SETTINGS -->
+
+                    <div class="settings-grid">
+
+                        <div>
+                            <label>Aspect Ratio</label>
+
+                            <select id="ratio">
+                                <option>16:9 Landscape</option>
+                                <option>9:16 Portrait</option>
+                                <option>1:1 Square</option>
+                                <option>4:3 Classic</option>
+                            </select>
+                        </div>
+
+
+                        <div>
+                            <label>Duration</label>
+
+                            <select id="duration">
+                                <option value="5">5 Seconds</option>
+                                <option value="10">10 Seconds</option>
+                                <option value="15">15 Seconds</option>
+                                <option value="20">20 Seconds</option>
+                            </select>
+                        </div>
+
+
+                        <div>
+                            <label>Video Quality</label>
+
+                            <select id="quality">
+                                <option>Standard</option>
+                                <option>HD</option>
+                                <option>Ultra</option>
+                            </select>
+                        </div>
+
+
+                        <div>
+                            <label>Visual Style</label>
+
+                            <select id="style">
+                                <option>Cinematic</option>
+                                <option>Realistic</option>
+                                <option>Anime</option>
+                                <option>3D Animation</option>
+                                <option>Cartoon</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!-- NEGATIVE PROMPT -->
+
+                    <label>Negative Prompt</label>
+
+                    <input type="text"
+                        id="negative"
+                        placeholder="What should not appear in your video?">
+
+
+                    <!-- IMAGE UPLOAD -->
+
+                    <label>Reference Image</label>
+
+                    <div class="upload-box">
+
+                        <input type="file"
+                            id="reference"
+                            accept="image/png,image/jpeg,image/webp">
+
+                        <div class="upload-content">
+                            <div class="upload-icon">↑</div>
+
+                            <h3>Upload Reference Image</h3>
+
+                            <p>PNG, JPG or WEBP</p>
+                        </div>
+
+                        <img id="imagePreview" alt="Image preview">
+
+                    </div>
+
+
+                    <!-- GENERATE -->
+
+                    <div class="generate-footer">
+
+                        <div>
+                            <strong>Free Generation</strong>
+
+                            <small id="remainingText">
+                                5 videos remaining today
+                            </small>
+                        </div>
+
+                        <button class="generate-button"
+                            id="generateBtn"
+                            onclick="generateVideo()">
+
+                            ✦ Generate Video
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PREVIEW PANEL -->
+
+                <div class="preview-card">
+
+                    <div class="preview-heading">
+
+                        <h2>Video Preview</h2>
+
+                        <span>LIVE PREVIEW</span>
+
+                    </div>
+
+
+                    <div class="preview-screen" id="previewScreen">
+
+                        <div class="preview-content">
+
+                            <div class="play-button">▶</div>
+
+                            <h3>Your Video Will Appear Here</h3>
+
+                            <p>Enter a prompt to start creating.</p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="preview-details">
+
+                        <div>
+                            <small>AI ENGINE</small>
+                            <strong>AI Video AI</strong>
+                        </div>
+
+                        <div>
+                            <small>YOUR PLAN</small>
+                            <strong>Free</strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="premium-box">
+
+                        <h3>Unlock More Creative Power ✦</h3>
+
+                        <p>
+                            Get more video generations, better quality
+                            and premium features.
+                        </p>
+
+                        <button onclick="showPage('upgrade')">
+                            Explore Premium →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT VIDEOS -->
+
+            <div class="recent-section">
+
+                <div class="section-title">
+                    <h2>Recent Creations</h2>
+
+                    <button onclick="showPage('history')">
+                        View All →
+                    </button>
+                </div>
+
+                <div class="video-grid" id="recentVideos">
+
+                    <p class="empty-message">
+                        Your creations will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LIBRARY -->
+
+        <section class="page hidden" id="libraryPage">
+
+            <div class="page-heading">
+                <h1>My Library</h1>
+                <p>All your saved projects in one place.</p>
+            </div>
+
+            <div class="video-grid" id="libraryVideos"></div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+
+        <section class="page hidden" id="historyPage">
+
+            <div class="page-heading">
+                <h1>Recent Creations</h1>
+                <p>Explore your recent projects.</p>
+            </div>
+
+            <div class="video-grid" id="historyVideos"></div>
+
+        </section>
+
+
+        <!-- UPGRADE -->
+
+        <section class="page hidden" id="upgradePage">
+
+            <div class="pricing-heading">
+
+                <span class="hero-badge">✦ AI VIDEO STUDIO PREMIUM</span>
+
+                <h1>
+                    Choose Your<br>
+                    <span>Creative Power.</span>
+                </h1>
+
+                <p>
+                    Start for free. Upgrade whenever you need more.
+                </p>
+
+
+                <div class="billing-toggle">
+
+                    <button id="monthlyBtn"
+                        class="selected"
+                        onclick="setBilling('monthly')">
+                        Monthly
+                    </button>
+
+                    <button id="yearlyBtn"
+                        onclick="setBilling('yearly')">
+                        Yearly <span>Save 20%</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="pricing-grid">
+
+
+                <!-- FREE -->
+
+                <div class="price-card">
+
+                    <div class="plan-icon">🌱</div>
+
+                    <h2>Free</h2>
+
+                    <p>Start your creative journey.</p>
+
+                    <h1>Rs. 0 <small>/ forever</small></h1>
+
+                    <button class="current-plan">
+                        Current Plan
+                    </button>
+
+                    <ul>
+                        <li>✓ 5 Videos Every Day</li>
+                        <li>✓ Standard Quality</li>
+                        <li>✓ 20 Seconds Duration</li>
+                        <li>✓ Basic AI Prompts</li>
+                        <li>✓ My Library</li>
+                        <li>✓ Watermark</li>
+                    </ul>
+
+                </div>
+
+
+                <!-- STARTER -->
+
+                <div class="price-card">
+
+                    <div class="plan-icon">🚀</div>
+
+                    <h2>Starter</h2>
+
+                    <p>For growing creators.</p>
+
+                    <h1 class="price"
+                        data-month="499"
+                        data-year="4790">
+
+                        Rs. 499 <small>/ month</small>
+
+                    </h1>
+
+                    <button class="buy-button"
+                        onclick="upgrade('Starter')">
+                        Upgrade Now →
+                    </button>
+
+                    <ul>
+                        <li>✓ 15 Videos Every Day</li>
+                        <li>✓ HD Quality</li>
+                        <li>✓ 20 Seconds Duration</li>
+                        <li>✓ Advanced Prompts</li>
+                        <li>✓ No Watermark</li>
+                        <li>✓ Priority Support</li>
+                    </ul>
+
+                </div>
+
+
+                <!-- CREATOR -->
+
+                <div class="price-card popular">
+
+                    <div class="popular-label">MOST POPULAR</div>
+
+                    <div class="plan-icon">💎</div>
+
+                    <h2>Creator</h2>
+
+                    <p>For serious creators.</p>
+
+                    <h1 class="price"
+                        data-month="999"
+                        data-year="9590">
+
+                        Rs. 999 <small>/ month</small>
+
+                    </h1>
+
+                    <button class="buy-button"
+                        onclick="upgrade('Creator')">
+                        Upgrade Now →
+                    </button>
+
+                    <ul>
+                        <li>✓ 30 Videos Every Day</li>
+                        <li>✓ Full HD Quality</li>
+                        <li>✓  20 Seconds Duration</li>
+                        <li>✓ Premium AI Styles</li>
+                        <li>✓ No Watermark</li>
+                        <li>✓ Priority Generation</li>
+                    </ul>
+
+                </div>
+
+
+                <!-- PRO -->
+
+                <div class="price-card">
+
+                    <div class="plan-icon">👑</div>
+
+                    <h2>Pro</h2>
+
+                    <p>For professional creators.</p>
+
+                    <h1 class="price"
+                        data-month="1999"
+                        data-year="19190">
+
+                        Rs. 1,999 <small>/ month</small>
+
+                    </h1>
+
+                    <button class="buy-button"
+                        onclick="upgrade('Pro')">
+                        Upgrade Now →
+                    </button>
+
+                    <ul>
+                        <li>✓ 100 Videos Every Day</li>
+                        <li>✓ Ultra Quality</li>
+                        <li>✓  20 Seconds Duration</li>
+                        <li>✓ Premium AI Models</li>
+                        <li>✓ No Watermark</li>
+                        <li>✓ Fast Generation</li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <p class="pricing-note">
+                Prices are proposed PKR prices. Actual subscriptions
+                require payment gateway integration.
+            </p>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+
+        <section class="page hidden" id="settingsPage">
+
+            <div class="page-heading">
+                <h1>Settings</h1>
+                <p>Manage your preferences.</p>
+            </div>
+
+            <div class="settings-card">
+
+                <h3>Account Plan</h3>
+
+                <p>Free Plan – 5 videos daily.</p>
+
+                <button class="buy-button"
+                    onclick="showPage('upgrade')">
+                    View Upgrade Plans
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
